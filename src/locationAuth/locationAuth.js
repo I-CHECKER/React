@@ -41,8 +41,8 @@ const LocationAuth = () => {
     const calculateDistance = () => {
         if (currentCoords) {
             const distance = Math.sqrt(
-                Math.pow(currentCoords.latitude - baseLatitude,3) +
-                Math.pow(currentCoords.longitude - baseLongitude,3)
+                Math.pow(currentCoords.latitude - baseLatitude, 3) +
+                Math.pow(currentCoords.longitude - baseLongitude, 3)
             );
             return distance;
         }
@@ -69,26 +69,26 @@ const LocationAuth = () => {
         <div>Geolocation is not enabled</div>
     ) : (
         <div>
-            <table>
+            <table style={{ width: "400px" }}>
                 <tbody>
                 <tr>
-                    <td>위도</td>
-                    <td>{currentCoords?.latitude || "N/A"}</td>
+                    <td style={{ width: "50%", textAlign: "left" }}>위도</td>
+                    <td style={{ width: "300%" }}>{currentCoords?.latitude || "N/A"}</td>
                 </tr>
                 <tr>
-                    <td>경도</td>
+                    <td style={{ textAlign: "left" }}>경도</td>
                     <td>{currentCoords?.longitude || "N/A"}</td>
                 </tr>
                 <tr>
-                    <td>정확도</td>
+                    <td style={{ textAlign: "left" }}>정확도</td>
                     <td>{currentCoords?.accuracy || "N/A"}</td>
                 </tr>
                 <tr>
-                    <td>날짜</td>
+                    <td style={{ textAlign: "left" }}>날짜</td>
                     <td>{timestampString}</td>
                 </tr>
                 <tr>
-                    <td>
+                    <td colSpan="2" style={{ textAlign: "left" }}>
                         <MapRender
                             latitude={currentCoords?.latitude || baseLatitude}
                             longitude={currentCoords?.longitude || baseLongitude}
@@ -96,7 +96,9 @@ const LocationAuth = () => {
                     </td>
                 </tr>
                 <tr>
-                    <td>연구실이 근처에 {isWithinRange ? "있습니다." : "없습니다."}</td>
+                    <td colSpan="2" style={{ textAlign: "left" }}>
+                        연구실이 근처에 {isWithinRange ? "있습니다." : "없습니다."}
+                    </td>
                 </tr>
                 </tbody>
             </table>

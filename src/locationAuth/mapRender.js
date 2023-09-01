@@ -27,8 +27,8 @@ const MapRender = ({ latitude, longitude }) => {
         <div
             id="map"
             style={{
-                width: "500px",
-                height: "500px",
+                width: "400px",
+                height: "400px",
             }}
         ></div>
     );
