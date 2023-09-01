@@ -102,7 +102,9 @@ const LocationAuth = () => {
                 </tr>
                 </tbody>
             </table>
-            <button onClick={handleSyncLocation}>동기화</button>
+            <div>
+                <button onClick={handleSyncLocation}>동기화</button>
+            </div>
         </div>
     );
 };
