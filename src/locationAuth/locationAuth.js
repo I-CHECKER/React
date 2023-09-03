@@ -31,7 +31,7 @@ const LocationAuth = () => {
 
     // 직사각형 연구실의 최소 경도, 최대 경도, 최소 위도, 최대 위도 설정
     const minLongitude = 126.734441;
-    const maxLongitude = 126.734456;
+    const maxLongitude = 126.734457;
     const minLatitude = 37.33864;
     const maxLatitude = 37.33878;
 
