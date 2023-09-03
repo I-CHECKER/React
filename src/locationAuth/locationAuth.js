@@ -30,10 +30,10 @@ const LocationAuth = () => {
     const timestampString = timestampDate ? timestampDate.toLocaleString() : "N/A";
 
     // 직사각형 연구실의 최소 경도, 최대 경도, 최소 위도, 최대 위도 설정
-    const minLongitude = 126.734449;
-    const maxLongitude = 126.7344639;
-    const minLatitude = 37.3387144;
-    const maxLatitude = 37.3387185;
+    const minLongitude = 126.734441;
+    const maxLongitude = 126.734456;
+    const minLatitude = 37.33864;
+    const maxLatitude = 37.33878;
 
     const [currentCoords, setCurrentCoords] = useState(initialCoords);
     const [isWithinRange, setIsWithinRange] = useState(false);
