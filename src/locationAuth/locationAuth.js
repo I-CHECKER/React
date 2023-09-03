@@ -29,24 +29,27 @@ const LocationAuth = () => {
     // 날짜 형식으로 변환 (예: "2023-09-01 14:30:00")
     const timestampString = timestampDate ? timestampDate.toLocaleString() : "N/A";
 
-    // 기준 위도, 경도 및 오차 범위 설정
-    const baseLatitude = 37.33871;
-    const baseLongitude = 126.73446;
-    const errorRange = 0.000002;
+    // 직사각형 연구실의 최소 경도, 최대 경도, 최소 위도, 최대 위도 설정
+    const minLongitude = 126.734449;
+    const maxLongitude = 126.7344639;
+    const minLatitude = 37.3387144;
+    const maxLatitude = 37.3387185;
 
     const [currentCoords, setCurrentCoords] = useState(initialCoords);
     const [isWithinRange, setIsWithinRange] = useState(false);
 
-    // 현재 위치와 기준 위치 간의 거리 계산
-    const calculateDistance = () => {
-        if (currentCoords) {
-            const distance = Math.sqrt(
-                Math.pow(currentCoords.latitude - baseLatitude, 3) +
-                Math.pow(currentCoords.longitude - baseLongitude, 3)
-            );
-            return distance;
+    // 현재 위치가 주어진 범위 내에 있는지 확인
+    const isWithinLabRange = () => {
+        if (
+            currentCoords &&
+            currentCoords.longitude >= minLongitude &&
+            currentCoords.longitude <= maxLongitude &&
+            currentCoords.latitude >= minLatitude &&
+            currentCoords.latitude <= maxLatitude
+        ) {
+            return true;
         }
-        return null;
+        return false;
     };
 
     const handleSyncLocation = () => {
@@ -54,13 +57,8 @@ const LocationAuth = () => {
     };
 
     useEffect(() => {
-        const distance = calculateDistance();
-        // 오차 범위 내에 위치한 경우
-        if (distance !== null && distance <= errorRange) {
-            setIsWithinRange(true);
-        } else {
-            setIsWithinRange(false);
-        }
+        const withinRange = isWithinLabRange();
+        setIsWithinRange(withinRange);
     }, [currentCoords]);
 
     return !isGeolocationAvailable ? (
@@ -90,8 +88,8 @@ const LocationAuth = () => {
                 <tr>
                     <td colSpan="2" style={{ textAlign: "left" }}>
                         <MapRender
-                            latitude={currentCoords?.latitude || baseLatitude}
-                            longitude={currentCoords?.longitude || baseLongitude}
+                            latitude={currentCoords?.latitude || minLatitude}
+                            longitude={currentCoords?.longitude || minLongitude}
                         />
                     </td>
                 </tr>
