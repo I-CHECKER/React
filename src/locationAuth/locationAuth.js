@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useGeolocated } from "react-geolocated";
-import { Wrapper, GoogleMap, Marker } from "@googlemaps/react-wrapper";
 import MapRender from "./mapRender";
 
 const LocationAuth = () => {
@@ -8,7 +7,6 @@ const LocationAuth = () => {
         coords: initialCoords,
         isGeolocationAvailable,
         isGeolocationEnabled,
-        positionError,
         timestamp,
     } = useGeolocated({
         positionOptions: {
@@ -24,62 +22,109 @@ const LocationAuth = () => {
         watchLocationPermissionChange: false,
     });
 
-    // timestamp를 Date 객체로 변환
-    const timestampDate = timestamp ? new Date(timestamp) : null;
-    // 날짜 형식으로 변환 (예: "2023-09-01 14:30:00")
-    const timestampString = timestampDate ? timestampDate.toLocaleString() : "N/A";
+    const [latitude, setLatitude] = useState(initialCoords?.latitude || "N/A");
+    const [longitude, setLongitude] = useState(initialCoords?.longitude || "N/A");
+    const [accuracy, setAccuracy] = useState(initialCoords?.accuracy || "N/A");
+    const [timestampString, setTimestampString] = useState(
+        timestamp ? new Date(timestamp).toLocaleString() : "N/A"
+    );
+    const [isWithinRange, setIsWithinRange] = useState(false);
 
-    // 직사각형 연구실의 최소 경도, 최대 경도, 최소 위도, 최대 위도 설정
+    const mapRef = useRef(null);
+
     const minLongitude = 126.734441;
     const maxLongitude = 126.734457;
     const minLatitude = 37.33864;
     const maxLatitude = 37.33878;
 
-    const [currentCoords, setCurrentCoords] = useState(initialCoords);
-    const [isWithinRange, setIsWithinRange] = useState(false);
-
-    // 현재 위치가 주어진 범위 내에 있는지 확인
-    const isWithinLabRange = () => {
+    const checkIsWithinRange = () => {
         if (
-            currentCoords &&
-            currentCoords.longitude >= minLongitude &&
-            currentCoords.longitude <= maxLongitude &&
-            currentCoords.latitude >= minLatitude &&
-            currentCoords.latitude <= maxLatitude
+            initialCoords &&
+            initialCoords.longitude >= minLongitude &&
+            initialCoords.longitude <= maxLongitude &&
+            initialCoords.latitude >= minLatitude &&
+            initialCoords.latitude <= maxLatitude
         ) {
             return true;
         }
         return false;
     };
 
-    const handleSyncLocation = () => {
-        setCurrentCoords(initialCoords);
+    const initMap = () => {
+        if (typeof initialCoords !== "string") {
+            const container = document.getElementById("map");
+            const options = {
+                center: new window.kakao.maps.LatLng(
+                    initialCoords.latitude,
+                    initialCoords.longitude
+                ),
+                level: 2,
+            };
+
+            const map = new window.kakao.maps.Map(container, options);
+            mapRef.current = map;
+
+            // 마커를 생성하고 표시
+            const markerPosition = new window.kakao.maps.LatLng(
+                initialCoords.latitude,
+                initialCoords.longitude
+            );
+
+            const marker = new window.kakao.maps.Marker({
+                position: markerPosition,
+                map: map,
+            });
+
+            // 위치 범위 다시 확인
+            setIsWithinRange(checkIsWithinRange());
+        }
     };
 
-    useEffect(() => {
-        const withinRange = isWithinLabRange();
-        setIsWithinRange(withinRange);
-    }, [currentCoords]);
+    const handleSyncLocation = () => {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const { latitude, longitude, accuracy } = position.coords;
+                setLatitude(latitude);
+                setLongitude(longitude);
+                setAccuracy(accuracy);
+                setTimestampString(new Date().toLocaleString());
+
+                // 위치 범위 다시 확인
+                setIsWithinRange(checkIsWithinRange());
+
+                // 지도 초기화
+                initMap();
+            },
+            (error) => {
+                console.error("Error getting location:", error);
+            },
+            {
+                enableHighAccuracy: true,
+                maximumAge: 0,
+                timeout: Infinity,
+            }
+        );
+    };
 
     return !isGeolocationAvailable ? (
-        <div>Your browser does not support Geolocation</div>
+        <div>귀하의 브라우저는 위치 정보를 지원하지 않습니다</div>
     ) : !isGeolocationEnabled ? (
-        <div>Geolocation is not enabled</div>
+        <div>위치 정보가 활성화되지 않았습니다</div>
     ) : (
         <div>
             <table style={{ width: "400px" }}>
                 <tbody>
                 <tr>
                     <td style={{ width: "50%", textAlign: "left" }}>위도</td>
-                    <td style={{ width: "300%" }}>{currentCoords?.latitude || "N/A"}</td>
+                    <td style={{ width: "300%" }}>{latitude}</td>
                 </tr>
                 <tr>
                     <td style={{ textAlign: "left" }}>경도</td>
-                    <td>{currentCoords?.longitude || "N/A"}</td>
+                    <td>{longitude}</td>
                 </tr>
                 <tr>
                     <td style={{ textAlign: "left" }}>정확도</td>
-                    <td>{currentCoords?.accuracy || "N/A"}</td>
+                    <td>{accuracy}</td>
                 </tr>
                 <tr>
                     <td style={{ textAlign: "left" }}>날짜</td>
@@ -87,10 +132,7 @@ const LocationAuth = () => {
                 </tr>
                 <tr>
                     <td colSpan="2" style={{ textAlign: "left" }}>
-                        <MapRender
-                            latitude={currentCoords?.latitude || minLatitude}
-                            longitude={currentCoords?.longitude || minLongitude}
-                        />
+                        <div id="map" style={{ width: "100%", height: "300px" }}></div>
                     </td>
                 </tr>
                 <tr>
