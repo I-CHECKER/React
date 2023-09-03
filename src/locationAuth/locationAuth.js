@@ -30,8 +30,8 @@ const LocationAuth = () => {
     const timestampString = timestampDate ? timestampDate.toLocaleString() : "N/A";
 
     // 기준 위도, 경도 및 오차 범위 설정
-    const baseLatitude = 37.3387;
-    const baseLongitude = 126.7345;
+    const baseLatitude = 37.33871;
+    const baseLongitude = 126.73446;
     const errorRange = 0.000002;
 
     const [currentCoords, setCurrentCoords] = useState(initialCoords);
