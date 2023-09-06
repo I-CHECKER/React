@@ -33,10 +33,10 @@ const LocationAuth = () => {
 
     const mapRef = useRef(null);
 
-    const minLongitude = 126.734441;
-    const maxLongitude = 126.734457;
-    const minLatitude = 37.33864;
-    const maxLatitude = 37.33878;
+    const minLongitude = 126.7338;
+    const maxLongitude = 126.735;
+    const minLatitude = 37.3384;
+    const maxLatitude = 37.3392;
 
     const checkIsWithinRange = () => {
         if (
