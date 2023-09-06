@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useGeolocated } from "react-geolocated";
 import MapRender from "./mapRender";
+import './locationAuth.css';
 
 const LocationAuth = () => {
     const {
@@ -49,7 +50,15 @@ const LocationAuth = () => {
         }
         return false;
     };
-
+    const handleAttendance = () => {
+        // Check if the user is within range before allowing attendance
+        if (isWithinRange) {
+            // Add your attendance logic here
+            alert("출석");
+        } else {
+            alert("연구실이 근처에 없습니다");
+        }
+    };
     const initMap = () => {
         if (typeof initialCoords !== "string") {
             const container = document.getElementById("map");
@@ -105,6 +114,8 @@ const LocationAuth = () => {
             }
         );
     };
+    const attendanceButtonClass = isWithinRange ? "active" : "inactive";
+    // ...
 
     return !isGeolocationAvailable ? (
         <div>귀하의 브라우저는 위치 정보를 지원하지 않습니다</div>
@@ -112,39 +123,38 @@ const LocationAuth = () => {
         <div>위치 정보가 활성화되지 않았습니다</div>
     ) : (
         <div>
-            <table style={{ width: "400px" }}>
+            <table>
                 <tbody>
-                <tr>
-                    <td style={{ width: "50%", textAlign: "left" }}>위도</td>
-                    <td style={{ width: "300%" }}>{latitude}</td>
+                <tr id="ims-check">
+                    <td>IMS 출석체크</td>
                 </tr>
                 <tr>
-                    <td style={{ textAlign: "left" }}>경도</td>
-                    <td>{longitude}</td>
-                </tr>
-                <tr>
-                    <td style={{ textAlign: "left" }}>정확도</td>
-                    <td>{accuracy}</td>
-                </tr>
-                <tr>
-                    <td style={{ textAlign: "left" }}>날짜</td>
-                    <td>{timestampString}</td>
-                </tr>
-                <tr>
-                    <td colSpan="2" style={{ textAlign: "left" }}>
+                    <td>
                         <div id="map" style={{ width: "100%", height: "300px" }}></div>
                     </td>
                 </tr>
                 <tr>
-                    <td colSpan="2" style={{ textAlign: "left" }}>
+                    <td>
                         연구실이 근처에 {isWithinRange ? "있습니다." : "없습니다."}
                     </td>
                 </tr>
                 </tbody>
-            </table>
-            <div>
-                <button onClick={handleSyncLocation}>동기화</button>
+
+            <div id="button-container">
+                <button
+                    id="sync-location-button"
+                    onClick={handleSyncLocation}
+                >
+                    위치 동기화
+                </button>
+                <button
+                    className={`attendance-button ${isWithinRange ? 'active' : 'inactive'}`}
+                    onClick={handleAttendance}
+                >
+                    출석
+                </button>
             </div>
+            </table>
         </div>
     );
 };

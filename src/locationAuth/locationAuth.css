@@ -1,0 +1,74 @@
+/* locationAuth.css */
+
+/* 위치 정보 및 버튼 스타일 */
+table {
+    width: 400px;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+#map-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#map {
+    width: 100%;
+    height: 300px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#button-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 20px; /* 버튼 사이의 간격 설정 (원하는 간격으로 조절) */
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+.active {
+    background-color: blue;
+    color: white;
+    cursor: pointer;
+}
+
+/* 비활성화된 상태의 출석 버튼 스타일 */
+.inactive {
+    background-color: gray;
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+/* IMS 출석체크 부분 스타일 */
+#ims-check {
+    font-size: 24px; /* 큰 글자 크기 */
+    font-weight: bold; /* 볼드체 */
+}
+
+/* 위치동기화 버튼 스타일 */
+#sync-location-button {
+    background-color: green; /* 배경색 지정 */
+    color: white; /* 글자색 지정 */
+    cursor: pointer;
+}
+
+/* 출석 버튼 스타일 */
+.attendance-button {
+    font-size: 16px;
+    padding: 10px 20px;
+    cursor: pointer;
+}

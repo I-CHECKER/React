@@ -1,7 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
 import LocationAuth from "./locationAuth/locationAuth";
-import MapRender from "./locationAuth/mapRender";
 
 function App() {
   return (
