@@ -1,13 +1,15 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Login from './login/login';
+
+import './App.css';
+import LocationAuth from "./locationAuth/locationAuth";
 
 function App() {
-    return (
+  return (
+    <div className="App">
         <div>
-
+            <LocationAuth/>
         </div>
-    );
+    </div>
+  );
 }
 
 export default App;
