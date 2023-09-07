@@ -51,14 +51,49 @@ const LocationAuth = () => {
         return false;
     };
     const handleAttendance = () => {
-        // Check if the user is within range before allowing attendance
         if (isWithinRange) {
-            // Add your attendance logic here
-            alert("출석");
+            const token = localStorage.getItem('access_TOKEN');
+            const currentDate = new Date();
+
+            // 날짜 형식화 (YYYY-MM-DD)
+            const formattedDate = currentDate.toISOString().split('T')[0];
+
+            // 시간 형식화 (HH:MM)
+            const hours = String(currentDate.getHours()).padStart(2, '0');
+            const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+            const formattedTime = `${hours}:${minutes}`;
+
+            const attendanceData = {
+                date: formattedDate, // 날짜를 "YYYY-MM-DD" 형식으로 설정
+                time: formattedTime, // 시간을 "HH:MM" 형식으로 설정
+            };
+            console.log(attendanceData);
+            const requestOptions = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+                body: JSON.stringify(attendanceData),
+            };
+
+            fetch('https://port-0-i-checker-api-eu1k2llleqefn5.sel3.cloudtype.app/attendance/add', requestOptions)
+                .then((response) => {
+                    if (response.ok) {
+                        alert("출석 성공");
+                    } else {
+                        alert("출석 실패");
+                    }
+                })
+                .catch((error) => {
+                    console.error("서버 요청 오류:", error);
+                    alert("서버 요청 중 오류가 발생했습니다");
+                });
         } else {
             alert("연구실이 근처에 없습니다");
         }
     };
+
     const initMap = () => {
         if (typeof initialCoords !== "string") {
             const container = document.getElementById("map");
