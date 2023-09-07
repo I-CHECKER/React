@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './register.css'; // Import the CSS file
+import './register.css'; 
 
 const Register = ({ title, subtitle, subtext }) => {
     const [grade, setGrade] = useState('');
@@ -32,7 +32,6 @@ const Register = ({ title, subtitle, subtext }) => {
     };
 
     const handleSubmit = async () => {
-
         console.log(userId);
         console.log(name);
         console.log(password);
@@ -44,11 +43,11 @@ const Register = ({ title, subtitle, subtext }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ userId:userId, password:password, grade:grade,name:name }),
+                body: JSON.stringify({ userId: userId, password: password, grade: grade, name: name }),
                 mode: 'cors',
             });
 
-            console.log(JSON.stringify({ userId:userId, name:name, password:password, grade:grade }));
+            console.log(JSON.stringify({ userId: userId, name: name, password: password, grade: grade }));
 
             if (response.ok) {
                 response.json().then((data) => {
@@ -57,7 +56,6 @@ const Register = ({ title, subtitle, subtext }) => {
                     localStorage.setItem('userId', userId);
                     localStorage.setItem('grade', grade);
                     localStorage.setItem('password', password);
-
                 }).catch((error) => {
                     console.error('JSON 파싱 오류:', error);
                 });
@@ -70,11 +68,11 @@ const Register = ({ title, subtitle, subtext }) => {
     };
 
     return (
-        <div>
+        <div className="register-container">
             <br />
-            <label>
+            <label className="register-label">
                 Select Grade:
-                <select value={grade} onChange={handleGradeChange}>
+                <select className="register-input" value={grade} onChange={handleGradeChange}>
                     <option value="0">Select Grade</option>
                     <option value="2학년">2학년</option>
                     <option value="3학년">3학년</option>
@@ -84,31 +82,31 @@ const Register = ({ title, subtitle, subtext }) => {
                 </select>
             </label>
 
-            <label>
+            <label className="register-label">
                 이름:
-                <input type="text" value={name} onChange={handleNameChange} />
+                <input className="register-input" type="text" value={name} onChange={handleNameChange} />
             </label>
 
-            <label>
+            <label className="register-label">
                 ID:<br />
-                <input type="text" value={userId} onChange={handleUserIdChange} />
+                <input className="register-input" type="text" value={userId} onChange={handleUserIdChange} />
             </label>
 
-            <label>
+            <label className="register-label">
                 Password:
-                <input type="password" value={password} onChange={handlePasswordChange} />
+                <input className="register-input" type="password" value={password} onChange={handlePasswordChange} />
             </label>
-            <label>
+            <label className="register-label">
                 Confirm Password:
-                <input type="password" value={confirmPassword} onChange={handleConfirmPasswordChange} />
+                <input className="register-input" type="password" value={confirmPassword} onChange={handleConfirmPasswordChange} />
             </label>
 
             <br />
 
             {passwordsMatch ? (
-                <button onClick={handleSubmit}>Submit</button>
+                <button className="register-button" onClick={handleSubmit}>Submit</button>
             ) : (
-                <p>패스워드가 일치하지 않습니다.</p>
+                <p className="register-error">패스워드가 일치하지 않습니다.</p>
             )}
         </div>
     );

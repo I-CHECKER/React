@@ -1,7 +1,7 @@
 /* Register.css */
 
 /* Style for the container div */
-div {
+.register-container {
     width: 350px;
     margin: 0 auto;
     padding: 20px;
@@ -12,36 +12,33 @@ div {
 }
 
 /* Style for the labels */
-label {
+.register-label {
     display: block;
     margin-bottom: 8px;
     font-weight: bold;
     font-size: 16px;
 }
 
-/* Style for the select input */
-select,
-input[type="text"],
-input[type="password"],
-input[type="Id"] {
-    width: 300px;
+/* Style for the select input and input */
+.register-input,
+.register-select {
+    width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
     margin-bottom: 12px;
     transition: border-color 0.3s ease;
+    box-sizing: border-box; /* Add box-sizing property */
 }
 
-select:hover,
-input[type="text"]:hover,
-input[type="password"]:hover,
-input[type="Id"]:hover{
+.register-input:hover,
+.register-select:hover {
     border-color: #007bff;
 }
 
 /* Style for the submit button */
-button {
+.register-button {
     width: 100%;
     padding: 12px;
     background-color: #007bff;
@@ -53,12 +50,12 @@ button {
     transition: background-color 0.3s ease;
 }
 
-button:hover {
+.register-button:hover {
     background-color: #0056b3;
 }
 
 /* Style for the error message */
-p {
+.register-error {
     color: red;
     margin-top: 5px;
     font-size: 14px;

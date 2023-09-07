@@ -1,39 +1,48 @@
+/* Login.css */
 
-
-.Login {
-    margin: auto;
+/* Style for the container div */
+.login-container {
+    width: 350px;
+    margin: 0 auto;
     padding: 20px;
-    width: 300px;
     border: 1px solid #ccc;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    background-color: #f8f8f8;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
+/* Style for the heading */
+.login-heading {
+    text-align: center;
+    font-size: 24px;
     margin-bottom: 20px;
-    color: #333;
 }
 
-input {
-    width: 500px;
-    padding: 10px;
-    margin-bottom: 10px;
+.login-input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box; /* padding과 border를 요소 크기에 포함 */
+    overflow: hidden; /* 내용이 요소의 경계를 벗어나지 않도록 설정 */
+    max-width: 100%; /* 필요한 경우, 최대 너비 설정 */
 }
 
-button {
-    width: 80px;
-    padding: 10px;
+/* Style for the Login button */
+.login-button {
+    width: 100%;
+    padding: 12px;
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-weight: bold;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
-button:hover {
+.login-button:hover {
     background-color: #0056b3;
 }

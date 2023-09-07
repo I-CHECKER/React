@@ -55,10 +55,8 @@ const LocationAuth = () => {
             const token = localStorage.getItem('access_TOKEN');
             const currentDate = new Date();
 
-            // 날짜 형식화 (YYYY-MM-DD)
             const formattedDate = currentDate.toISOString().split('T')[0];
 
-            // 시간 형식화 (HH:MM)
             const hours = String(currentDate.getHours()).padStart(2, '0');
             const minutes = String(currentDate.getMinutes()).padStart(2, '0');
             const formattedTime = `${hours}:${minutes}`;
@@ -174,24 +172,28 @@ const LocationAuth = () => {
                     </td>
                 </tr>
                 </tbody>
-
-            <div id="button-container">
-                <button
-                    id="sync-location-button"
-                    onClick={handleSyncLocation}
-                >
-                    위치 동기화
-                </button>
-                <button
-                    className={`attendance-button ${isWithinRange ? 'active' : 'inactive'}`}
-                    onClick={handleAttendance}
-                >
-                    출석
-                </button>
-            </div>
+                <tr>
+                    <td>
+                        <div id="button-container">
+                            <button
+                                id="sync-location-button"
+                                onClick={handleSyncLocation}
+                            >
+                                위치 동기화
+                            </button>
+                            <button
+                                className={`attendance-button ${isWithinRange ? 'active' : 'inactive'}`}
+                                onClick={handleAttendance}
+                            >
+                                출석
+                            </button>
+                        </div>
+                    </td>
+                </tr>
             </table>
         </div>
     );
+
 };
 
 export default LocationAuth;

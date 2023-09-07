@@ -40,21 +40,23 @@ function Login() {
 
 
     return (
-        <div>
-            <h2>로그인하세요</h2>
+        <div className="login-container">
+            <h2 className="login-heading">로그인하세요</h2>
             <input
                 type="text"
+                className="login-input"
                 placeholder="아이디"
                 value={userId}
                 onChange={(e) => setUserId(e.target.value)}
             />
             <input
                 type="password"
-                placeholder="패스월드"
+                className="login-input"
+                placeholder="패스워드"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <button onClick={handleLogin}>Login</button>
+            <button className="login-button" onClick={handleLogin}>Login</button>
         </div>
     );
 }
