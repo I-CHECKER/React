@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "./login.css";
 function Login() {
-    const [userId, setUserId] = useState(''); // 변경된 부분
+    const [userId, setUserId] = useState(''); 
     const [password, setPassword] = useState('');
 
     const handleLogin = async () => {
