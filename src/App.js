@@ -1,22 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import LocationAuth from "./locationAuth/locationAuth";
-import MapRender from "./locationAuth/mapRender";
+
+import React from 'react';
+import { BrowserRouter,Route,Routes } from 'react-router-dom';
+import Login from './login/login';
+import Register from './register/register';
+import Attendance from './locationAuth/locationAuth';
 import CsvDownload from "./csvDownload/csvDownload";
-
-
+import Home from './Home';
 function App() {
-  return (
-    <div className="App">
+    return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<LocationAuth/>}></Route>
-                <Route path="/csv" element={<CsvDownload/>}></Route>
+                <Route path="/home" element={<Home/>}/>
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/attendance" element={<Attendance />} />
+                <Route path="/csv" element={<CsvDownload/>}>
             </Routes>
         </BrowserRouter>
-    </div>
-  );
-}
-
+    );
+};
 export default App;

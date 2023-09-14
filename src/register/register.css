@@ -1,0 +1,62 @@
+/* Register.css */
+
+/* Style for the container div */
+.register-container {
+    width: 350px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f8f8f8;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for the labels */
+.register-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Style for the select input and input */
+.register-input,
+.register-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-bottom: 12px;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box; /* Add box-sizing property */
+}
+
+.register-input:hover,
+.register-select:hover {
+    border-color: #007bff;
+}
+
+/* Style for the submit button */
+.register-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.register-button:hover {
+    background-color: #0056b3;
+}
+
+/* Style for the error message */
+.register-error {
+    color: red;
+    margin-top: 5px;
+    font-size: 14px;
+}

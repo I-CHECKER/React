@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useGeolocated } from "react-geolocated";
 import MapRender from "./mapRender";
+import './locationAuth.css';
 
 const LocationAuth = () => {
     const {
@@ -32,10 +33,10 @@ const LocationAuth = () => {
 
     const mapRef = useRef(null);
 
-    const minLongitude = 126.734441;
-    const maxLongitude = 126.734457;
-    const minLatitude = 37.33864;
-    const maxLatitude = 37.33878;
+    const minLongitude = 126.7338;
+    const maxLongitude = 126.735;
+    const minLatitude = 37.3384;
+    const maxLatitude = 37.3392;
 
     const checkIsWithinRange = () => {
         if (
@@ -48,6 +49,47 @@ const LocationAuth = () => {
             return true;
         }
         return false;
+    };
+    const handleAttendance = () => {
+        if (isWithinRange) {
+            const token = localStorage.getItem('access_TOKEN');
+            const currentDate = new Date();
+
+            const formattedDate = currentDate.toISOString().split('T')[0];
+
+            const hours = String(currentDate.getHours()).padStart(2, '0');
+            const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+            const formattedTime = `${hours}:${minutes}`;
+
+            const attendanceData = {
+                date: formattedDate, // 날짜를 "YYYY-MM-DD" 형식으로 설정
+                time: formattedTime, // 시간을 "HH:MM" 형식으로 설정
+            };
+            console.log(attendanceData);
+            const requestOptions = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+                body: JSON.stringify(attendanceData),
+            };
+
+            fetch('https://port-0-i-checker-api-eu1k2llleqefn5.sel3.cloudtype.app/attendance/add', requestOptions)
+                .then((response) => {
+                    if (response.ok) {
+                        alert("출석 성공");
+                    } else {
+                        alert("출석 실패");
+                    }
+                })
+                .catch((error) => {
+                    console.error("서버 요청 오류:", error);
+                    alert("서버 요청 중 오류가 발생했습니다");
+                });
+        } else {
+            alert("연구실이 근처에 없습니다");
+        }
     };
 
     const initMap = () => {
@@ -105,6 +147,8 @@ const LocationAuth = () => {
             }
         );
     };
+    const attendanceButtonClass = isWithinRange ? "active" : "inactive";
+    // ...
 
     return !isGeolocationAvailable ? (
         <div>귀하의 브라우저는 위치 정보를 지원하지 않습니다</div>
@@ -112,41 +156,44 @@ const LocationAuth = () => {
         <div>위치 정보가 활성화되지 않았습니다</div>
     ) : (
         <div>
-            <table style={{ width: "400px" }}>
+            <table>
                 <tbody>
-                <tr>
-                    <td style={{ width: "50%", textAlign: "left" }}>위도</td>
-                    <td style={{ width: "300%" }}>{latitude}</td>
+                <tr id="ims-check">
+                    <td>IMS 출석체크</td>
                 </tr>
                 <tr>
-                    <td style={{ textAlign: "left" }}>경도</td>
-                    <td>{longitude}</td>
-                </tr>
-                <tr>
-                    <td style={{ textAlign: "left" }}>정확도</td>
-                    <td>{accuracy}</td>
-                </tr>
-                <tr>
-                    <td style={{ textAlign: "left" }}>날짜</td>
-                    <td>{timestampString}</td>
-                </tr>
-                <tr>
-                    <td colSpan="2" style={{ textAlign: "left" }}>
+                    <td>
                         <div id="map" style={{ width: "100%", height: "300px" }}></div>
                     </td>
                 </tr>
                 <tr>
-                    <td colSpan="2" style={{ textAlign: "left" }}>
+                    <td>
                         연구실이 근처에 {isWithinRange ? "있습니다." : "없습니다."}
                     </td>
                 </tr>
                 </tbody>
+                <tr>
+                    <td>
+                        <div id="button-container">
+                            <button
+                                id="sync-location-button"
+                                onClick={handleSyncLocation}
+                            >
+                                위치 동기화
+                            </button>
+                            <button
+                                className={`attendance-button ${isWithinRange ? 'active' : 'inactive'}`}
+                                onClick={handleAttendance}
+                            >
+                                출석
+                            </button>
+                        </div>
+                    </td>
+                </tr>
             </table>
-            <div>
-                <button onClick={handleSyncLocation}>동기화</button>
-            </div>
         </div>
     );
+
 };
 
 export default LocationAuth;

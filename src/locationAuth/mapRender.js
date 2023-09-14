@@ -1,6 +1,6 @@
 // MapRender.js
 import React, { useEffect } from "react";
-
+import './mapRender.css';
 const { kakao } = window;
 
 const MapRender = ({ latitude, longitude }) => {
@@ -26,10 +26,7 @@ const MapRender = ({ latitude, longitude }) => {
     return (
         <div
             id="map"
-            style={{
-                width: "400px",
-                height: "400px",
-            }}
+            className="map-container" // 스타일 클래스 추가
         ></div>
     );
 };
