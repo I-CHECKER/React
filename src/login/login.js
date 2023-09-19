@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import "./login.css";
 function Login() {
     const [userId, setUserId] = useState(''); 
     const [password, setPassword] = useState('');
-
+    const navigator = useNavigate();
     const handleLogin = async () => {
         console.log(JSON.stringify({ userId:userId, password:password }));
 
@@ -24,6 +25,7 @@ function Login() {
 
                     localStorage.setItem('userId', userId);
                     localStorage.setItem('password', password);
+                    navigator('/home');
 
                 }).catch(error => {
                     console.error('JSON 파싱 오류:', error);

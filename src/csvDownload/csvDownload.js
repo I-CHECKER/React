@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import * as XLSX from 'xlsx';
+import Home from '../Home'
 
 function App() {
     const [selectedMonth, setSelectedMonth] = useState("");
@@ -68,6 +69,7 @@ function App() {
 
     return (
         <div className="App">
+            <Home/>
             <button onClick={downloadExcel}>Excel 다운로드</button>
             <div className="calendar">
                 <label>

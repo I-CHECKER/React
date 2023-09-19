@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useGeolocated } from "react-geolocated";
 import MapRender from "./mapRender";
 import './locationAuth.css';
+import Home from '../Home';
 
 const LocationAuth = () => {
     const {
@@ -150,7 +151,8 @@ const LocationAuth = () => {
     const attendanceButtonClass = isWithinRange ? "active" : "inactive";
     // ...
 
-    return !isGeolocationAvailable ? (
+    return
+    !isGeolocationAvailable ? (
         <div>귀하의 브라우저는 위치 정보를 지원하지 않습니다</div>
     ) : !isGeolocationEnabled ? (
         <div>위치 정보가 활성화되지 않았습니다</div>
