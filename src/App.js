@@ -8,15 +8,7 @@ import LocationAuth from './locationAuth/locationAuth';
 import Home from './Home';
 function App() {
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/home" exact element={<Home/>}/>
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/attendance" element = {<LocationAuth />}/>
-                <Route path="/csv" element={<CsvDownload/>} />
-            </Routes>
-        </BrowserRouter>
+      <LocationAuth/>
     );
 };
 export default App;
